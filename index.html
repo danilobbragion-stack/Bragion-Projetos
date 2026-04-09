@@ -1,831 +1,336 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR" class="h-full">
- <head>
+<head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ART Obra Pro - Bragion Projetos</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <script src="/_sdk/data_sdk.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet">
-  <script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        brand: { 50:'#fef7ed', 100:'#fdecd4', 200:'#f9d5a8', 300:'#f4b76f', 400:'#ee8f35', 500:'#ea7512', 600:'#d05c08', 700:'#ac4309', 800:'#893610', 900:'#742f10' },
-        slate: { 850:'#172033', 900:'#0f172a', 950:'#080d1a' }
-      }
-    }
-  }
-}
-</script>
   <style>
-html, body { height: 100%; margin: 0; font-family: 'DM Sans', sans-serif; }
-.font-display { font-family: 'Playfair Display', serif; }
-.sidebar-link { transition: all 0.2s; }
-.sidebar-link:hover, .sidebar-link.active { background: rgba(234,117,18,0.12); color: #ea7512; }
-.card-hover { transition: transform 0.2s, box-shadow 0.2s; }
-.card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
-.fade-in { animation: fadeIn 0.3s ease-out; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-.status-badge { padding: 2px 10px; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-input:focus, select:focus, textarea:focus { outline: none; border-color: #ea7512; box-shadow: 0 0 0 3px rgba(234,117,18,0.15); }
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-.toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999; padding: 12px 20px; border-radius: 8px; color: #fff; font-weight: 500; animation: slideUp 0.3s ease-out; }
-@keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-.mobile-overlay { display:none; }
-@media(max-width:1023px) { .mobile-overlay.open { display:block; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:40; } }
-</style>
-  <style>body { box-sizing: border-box; }</style>
- </head>
- <body class="h-full bg-slate-950 text-slate-200 overflow-hidden">
-  <div id="app" class="h-full flex"><!-- Mobile Overlay -->
-   <div id="mobileOverlay" class="mobile-overlay" onclick="toggleSidebar()"></div><!-- Sidebar -->
-   <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col h-full flex-shrink-0 fixed lg:relative z-50 -translate-x-full lg:translate-x-0 transition-transform">
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: 'DM Sans', sans-serif; scroll-behavior: smooth; }
+    .font-display { font-family: 'Playfair Display', serif; }
+    .sidebar-link { transition: all 0.2s ease; border-radius: 0.5rem; }
+    .sidebar-link:hover, .sidebar-link.active { background: rgba(234,117,18,0.12); color: #ea7512 !important; }
+    .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
+    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 25px -8px rgba(0,0,0,0.4); }
+    .fade-in { animation: fadeIn 0.25s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .status-badge { padding: 2px 10px; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; display: inline-block; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #ea7512; box-shadow: 0 0 0 3px rgba(234,117,18,0.2); transition: all 0.1s; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #ea7512; border-radius: 4px; }
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999; padding: 12px 20px; border-radius: 12px; color: white; font-weight: 500; backdrop-filter: blur(8px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); animation: slideUp 0.25s ease-out; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .mobile-overlay { display: none; }
+    @media (max-width: 1023px) { .mobile-overlay.open { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 40; } }
+    .btn-primary { background-color: #ea7512; transition: all 0.2s; }
+    .btn-primary:hover { background-color: #c55f0a; transform: scale(0.98); }
+    .responsive-table { overflow-x: auto; }
+  </style>
+</head>
+<body class="h-full bg-slate-950 text-slate-200 overflow-hidden">
+<div id="app" class="h-full flex">
+  <!-- Mobile overlay -->
+  <div id="mobileOverlay" class="mobile-overlay" onclick="toggleSidebar()"></div>
+  
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-64 bg-slate-900/95 border-r border-slate-800 flex flex-col h-full flex-shrink-0 fixed lg:relative z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl">
     <div class="p-5 border-b border-slate-800">
-     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-brand-500 rounded-lg flex items-center justify-center"><i data-lucide="hard-hat" class="w-5 h-5 text-white"></i>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-brand-500 rounded-lg flex items-center justify-center shadow-lg"><i data-lucide="hard-hat" class="w-5 h-5 text-white"></i></div>
+        <div>
+          <div id="sidebarTitle" class="font-display text-lg text-white leading-tight">ART Obra Pro</div>
+          <div id="sidebarBrand" class="text-[11px] text-brand-400 font-medium tracking-wide">BRAGION PROJETOS</div>
+        </div>
       </div>
-      <div>
-       <div id="sidebarTitle" class="font-display text-lg text-white leading-tight">
-        ART Obra Pro
-       </div>
-       <div id="sidebarBrand" class="text-[11px] text-brand-400 font-medium tracking-wide">
-        BRAGION PROJETOS
-       </div>
-      </div>
-     </div>
     </div>
-    <nav class="flex-1 p-3 space-y-1 overflow-auto"><button onclick="navigate('dashboard')" class="sidebar-link active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" data-nav="dashboard"> <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard </button> <button onclick="navigate('works')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400" data-nav="works"> <i data-lucide="building-2" class="w-4 h-4"></i> Obras </button> <button onclick="navigate('clients')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400" data-nav="clients"> <i data-lucide="users" class="w-4 h-4"></i> Clientes </button> <button onclick="navigate('arts')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400" data-nav="arts"> <i data-lucide="file-text" class="w-4 h-4"></i> ARTs </button> <button onclick="navigate('new-art')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400" data-nav="new-art"> <i data-lucide="plus-circle" class="w-4 h-4"></i> Nova ART </button> <button onclick="navigate('reports')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400" data-nav="reports"> <i data-lucide="bar-chart-3" class="w-4 h-4"></i> Relatórios </button>
+    <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+      <button onclick="navigate('dashboard')" class="sidebar-link active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white" data-nav="dashboard"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard</button>
+      <button onclick="navigate('works')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400" data-nav="works"><i data-lucide="building-2" class="w-4 h-4"></i> Obras</button>
+      <button onclick="navigate('clients')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400" data-nav="clients"><i data-lucide="users" class="w-4 h-4"></i> Clientes</button>
+      <button onclick="navigate('arts')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400" data-nav="arts"><i data-lucide="file-text" class="w-4 h-4"></i> ARTs</button>
+      <button onclick="navigate('new-art')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400" data-nav="new-art"><i data-lucide="plus-circle" class="w-4 h-4"></i> Nova ART</button>
+      <button onclick="navigate('reports')" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400" data-nav="reports"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> Relatórios</button>
     </nav>
     <div class="p-3 border-t border-slate-800">
-     <div class="flex items-center gap-3 px-3 py-2">
-      <div class="w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center text-white text-xs font-bold">
-       BP
+      <div class="flex items-center gap-3 px-3 py-2">
+        <div class="w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center text-white text-xs font-bold">BP</div>
+        <div class="flex-1 min-w-0"><div class="text-sm font-medium text-white truncate">Eng. Bragion</div><div class="text-[11px] text-slate-500">Administrador</div></div>
       </div>
-      <div class="flex-1 min-w-0">
-       <div class="text-sm font-medium text-white truncate">
-        Eng. Bragion
-       </div>
-       <div class="text-[11px] text-slate-500">
-        Administrador
-       </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 h-full overflow-auto">
+    <header class="sticky top-0 z-30 bg-slate-950/90 backdrop-blur-lg border-b border-slate-800/60 px-4 lg:px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-slate-800 text-slate-400"><i data-lucide="menu" class="w-5 h-5"></i></button>
+        <h1 id="pageTitle" class="text-lg font-semibold text-white">Painel de Controle</h1>
       </div>
-     </div>
-    </div>
-   </aside><!-- Main Content -->
-   <main class="flex-1 h-full overflow-auto"><!-- Top Bar -->
-    <header class="sticky top-0 z-30 bg-slate-950/80 backdrop-blur-lg border-b border-slate-800/50 px-4 lg:px-6 py-3 flex items-center justify-between">
-     <div class="flex items-center gap-3"><button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-slate-800 text-slate-400"><i data-lucide="menu" class="w-5 h-5"></i></button>
-      <h1 id="pageTitle" class="text-lg font-semibold text-white">Painel de Controle</h1>
-     </div>
-     <div class="flex items-center gap-2"><button onclick="navigate('new-art')" class="hidden sm:flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"> <i data-lucide="plus" class="w-4 h-4"></i> Nova ART </button> <button class="p-2 rounded-lg hover:bg-slate-800 text-slate-400 relative"> <i data-lucide="bell" class="w-5 h-5"></i> <span id="notifBadge" class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 rounded-full text-[10px] text-white flex items-center justify-center font-bold hidden">0</span> </button>
-     </div>
-    </header><!-- Page Content Container -->
-    <div id="pageContent" class="p-4 lg:p-6 fade-in"><!-- Dashboard loaded by default -->
-    </div>
-   </main>
-  </div><!-- Toast Container -->
-  <div id="toastContainer"></div><!-- Inline Confirm Modal -->
-  <div id="confirmModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-sm" style="display:none;">
-   <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 max-w-sm w-full mx-4 shadow-2xl">
+      <div class="flex items-center gap-2">
+        <button onclick="navigate('new-art')" class="hidden sm:flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-md"><i data-lucide="plus" class="w-4 h-4"></i> Nova ART</button>
+        <button id="settingsBtn" class="p-2 rounded-lg hover:bg-slate-800 text-slate-400 transition-colors"><i data-lucide="settings" class="w-5 h-5"></i></button>
+        <button class="p-2 rounded-lg hover:bg-slate-800 text-slate-400 relative"><i data-lucide="bell" class="w-5 h-5"></i><span id="notifBadge" class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 rounded-full text-[10px] text-white flex items-center justify-center font-bold hidden">0</span></button>
+      </div>
+    </header>
+    <div id="pageContent" class="p-4 lg:p-6 fade-in"></div>
+  </main>
+</div>
+<div id="toastContainer"></div>
+<div id="confirmModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/70 backdrop-blur-sm" style="display:none;">
+  <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 max-w-sm w-full mx-4 shadow-2xl animate-fade-in">
     <p id="confirmMsg" class="text-white text-sm mb-4"></p>
-    <div class="flex gap-3 justify-end"><button onclick="closeConfirm()" class="px-4 py-2 rounded-lg text-sm text-slate-400 hover:bg-slate-700 transition-colors">Cancelar</button> <button id="confirmBtn" class="px-4 py-2 rounded-lg text-sm bg-red-500 hover:bg-red-600 text-white font-medium transition-colors">Confirmar</button>
-    </div>
-   </div>
+    <div class="flex gap-3 justify-end"><button onclick="closeConfirm()" class="px-4 py-2 rounded-lg text-sm text-slate-400 hover:bg-slate-700 transition">Cancelar</button><button id="confirmBtn" class="px-4 py-2 rounded-lg text-sm bg-red-500 hover:bg-red-600 text-white font-medium transition">Confirmar</button></div>
   </div>
-  <script>
-// ============ STATE ============
-let allData = [];
-let currentPage = 'dashboard';
-let editingId = null;
-let confirmCallback = null;
+</div>
 
-const defaultConfig = {
-  app_title: 'ART Obra Pro',
-  company_brand: 'Bragion Projetos',
-  dashboard_greeting: 'Painel de Controle',
-  background_color: '#080d1a',
-  surface_color: '#0f172a',
-  text_color: '#e2e8f0',
-  primary_action_color: '#ea7512',
-  secondary_action_color: '#64748b',
-  font_family: 'DM Sans',
-  font_size: 14
-};
+<!-- Settings Modal (Configurações) -->
+<div id="settingsModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/70 backdrop-blur-sm" style="display:none;">
+  <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 max-w-md w-full mx-4 space-y-4">
+    <h3 class="text-white font-bold text-lg flex items-center gap-2"><i data-lucide="sliders" class="w-5 h-5 text-brand-400"></i> Personalização</h3>
+    <div><label class="block text-xs text-slate-400 mb-1">Título do App</label><input id="configAppTitle" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm"></div>
+    <div><label class="block text-xs text-slate-400 mb-1">Marca / Empresa</label><input id="configBrand" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm"></div>
+    <div><label class="block text-xs text-slate-400 mb-1">Saudação Dashboard</label><input id="configGreeting" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm"></div>
+    <div><label class="block text-xs text-slate-400 mb-1">Cor Primária (ex: #ea7512)</label><input id="configPrimary" type="color" class="w-full h-10 bg-slate-700 border border-slate-600 rounded-lg p-1"></div>
+    <div class="flex gap-3 justify-end pt-2"><button onclick="closeSettings()" class="px-4 py-2 rounded-lg text-sm text-slate-400 hover:bg-slate-700">Cancelar</button><button id="applySettingsBtn" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-lg text-sm font-medium">Aplicar</button></div>
+  </div>
+</div>
 
-// ============ HELPERS ============
-function getByType(t) { return allData.filter(r => r.type === t); }
-function getArts() { return getByType('art'); }
-function getClients() { return getByType('client'); }
-function getWorks() { return getByType('work'); }
-function nextArtNumber() { const arts = getArts(); return 'ART-' + String(arts.length + 1).padStart(4, '0'); }
-function formatCurrency(v) { return 'R$ ' + Number(v||0).toLocaleString('pt-BR', {minimumFractionDigits:2}); }
-function formatDate(d) { if(!d) return '-'; const dt = new Date(d); return dt.toLocaleDateString('pt-BR'); }
-function statusColor(s) {
-  const m = { rascunho:'bg-yellow-500/20 text-yellow-400', pendente:'bg-blue-500/20 text-blue-400', emitida:'bg-emerald-500/20 text-emerald-400', cancelada:'bg-red-500/20 text-red-400', arquivada:'bg-slate-500/20 text-slate-400' };
-  return m[s] || m.rascunho;
-}
-function showToast(msg, type='success') {
-  const t = document.createElement('div');
-  t.className = `toast ${type==='error'?'bg-red-600':'bg-emerald-600'}`;
-  t.textContent = msg;
-  document.getElementById('toastContainer').appendChild(t);
-  setTimeout(() => t.remove(), 3000);
-}
-function showConfirm(msg, cb) {
-  document.getElementById('confirmMsg').textContent = msg;
-  document.getElementById('confirmModal').style.display = 'flex';
-  confirmCallback = cb;
-  document.getElementById('confirmBtn').onclick = () => { closeConfirm(); if(confirmCallback) confirmCallback(); };
-}
-function closeConfirm() { document.getElementById('confirmModal').style.display = 'none'; confirmCallback = null; }
+<script>
+  // ======================== PERSISTÊNCIA LOCAL (localStorage) ========================
+  const STORAGE_KEY = 'art_obra_pro_data';
+  const CONFIG_KEY = 'art_obra_pro_config';
+  
+  let allData = [];
+  let currentPage = 'dashboard';
+  let editingId = null;
+  let confirmCallback = null;
+  let dataChangeListeners = [];
 
-function toggleSidebar() {
-  const s = document.getElementById('sidebar');
-  const o = document.getElementById('mobileOverlay');
-  s.classList.toggle('-translate-x-full');
-  o.classList.toggle('open');
-}
-
-// ============ NAVIGATION ============
-function navigate(page, data) {
-  currentPage = page;
-  editingId = data || null;
-  document.querySelectorAll('.sidebar-link').forEach(el => {
-    el.classList.remove('active');
-    el.classList.add('text-slate-400');
-    if(el.dataset.nav === page) { el.classList.add('active'); el.classList.remove('text-slate-400'); }
-  });
-  // Close mobile sidebar
-  const s = document.getElementById('sidebar');
-  if(!s.classList.contains('-translate-x-full') && window.innerWidth < 1024) toggleSidebar();
-
-  const titles = { dashboard: window.elementSdk?.config?.dashboard_greeting || defaultConfig.dashboard_greeting, works:'Obras', clients:'Clientes', arts:'ARTs Emitidas', 'new-art':'Nova ART', 'edit-art':'Editar ART', reports:'Relatórios', 'view-art':'Detalhes da ART', 'new-client':'Novo Cliente', 'new-work':'Nova Obra' };
-  document.getElementById('pageTitle').textContent = titles[page] || page;
-  renderPage();
-}
-
-function renderPage() {
-  const c = document.getElementById('pageContent');
-  c.className = 'p-4 lg:p-6 fade-in';
-  switch(currentPage) {
-    case 'dashboard': c.innerHTML = renderDashboard(); break;
-    case 'works': c.innerHTML = renderWorksList(); break;
-    case 'clients': c.innerHTML = renderClientsList(); break;
-    case 'arts': c.innerHTML = renderArtsList(); break;
-    case 'new-art': case 'edit-art': c.innerHTML = renderArtForm(); break;
-    case 'view-art': c.innerHTML = renderArtView(); break;
-    case 'new-client': c.innerHTML = renderClientForm(); break;
-    case 'new-work': c.innerHTML = renderWorkForm(); break;
-    case 'reports': c.innerHTML = renderReports(); break;
-    default: c.innerHTML = renderDashboard();
-  }
-  lucide.createIcons();
-  updateNotifBadge();
-}
-
-function updateNotifBadge() {
-  const pending = getArts().filter(a => a.art_status === 'pendente' || a.art_status === 'rascunho').length;
-  const b = document.getElementById('notifBadge');
-  if(pending > 0) { b.textContent = pending; b.classList.remove('hidden'); } else { b.classList.add('hidden'); }
-}
-
-// ============ DASHBOARD ============
-function renderDashboard() {
-  const arts = getArts(), clients = getClients(), works = getWorks();
-  const emitidas = arts.filter(a=>a.art_status==='emitida').length;
-  const pendentes = arts.filter(a=>a.art_status==='pendente'||a.art_status==='rascunho').length;
-  const totalValue = arts.reduce((s,a)=>s+(a.contract_value||0),0);
-
-  const recentArts = [...arts].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
-
-  return `
-  <div class="space-y-6">
-    <!-- Stats -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
-      ${statCard('file-text', 'ARTs Emitidas', emitidas, 'bg-emerald-500/10 text-emerald-400', 'border-emerald-500/20')}
-      ${statCard('clock', 'Pendentes', pendentes, 'bg-yellow-500/10 text-yellow-400', 'border-yellow-500/20')}
-      ${statCard('building-2', 'Obras Ativas', works.length, 'bg-blue-500/10 text-blue-400', 'border-blue-500/20')}
-      ${statCard('users', 'Clientes', clients.length, 'bg-brand-500/10 text-brand-400', 'border-brand-500/20')}
-    </div>
-
-    <!-- Quick Actions -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-      <button onclick="navigate('new-art')" class="card-hover bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl p-4 text-left text-white">
-        <i data-lucide="plus-circle" class="w-6 h-6 mb-2"></i>
-        <div class="font-semibold">Nova ART</div>
-        <div class="text-xs text-brand-100 mt-1">Emitir anotação</div>
-      </button>
-      <button onclick="navigate('new-client')" class="card-hover bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 text-left hover:border-brand-500/30">
-        <i data-lucide="user-plus" class="w-6 h-6 mb-2 text-brand-400"></i>
-        <div class="font-semibold text-white">Novo Cliente</div>
-        <div class="text-xs text-slate-400 mt-1">Cadastrar cliente</div>
-      </button>
-      <button onclick="navigate('new-work')" class="card-hover bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 text-left hover:border-brand-500/30">
-        <i data-lucide="landmark" class="w-6 h-6 mb-2 text-brand-400"></i>
-        <div class="font-semibold text-white">Nova Obra</div>
-        <div class="text-xs text-slate-400 mt-1">Registrar obra</div>
-      </button>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <!-- Recent ARTs -->
-      <div class="lg:col-span-2 bg-slate-900/50 border border-slate-800/50 rounded-xl">
-        <div class="px-5 py-4 border-b border-slate-800/50 flex items-center justify-between">
-          <h3 class="font-semibold text-white text-sm">ARTs Recentes</h3>
-          <button onclick="navigate('arts')" class="text-xs text-brand-400 hover:text-brand-300">Ver todas →</button>
-        </div>
-        <div class="p-2">
-          ${recentArts.length === 0 ? '<div class="text-center py-8 text-slate-500 text-sm">Nenhuma ART emitida ainda</div>' :
-            recentArts.map(a => `
-            <button onclick="navigate('view-art','${a.__backendId}')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800/50 text-left transition-colors">
-              <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center flex-shrink-0"><i data-lucide="file-text" class="w-4 h-4 text-brand-400"></i></div>
-              <div class="flex-1 min-w-0">
-                <div class="text-sm text-white font-medium truncate">${a.art_number || '-'} — ${a.work_name || 'Sem obra'}</div>
-                <div class="text-xs text-slate-500">${a.client_name || '-'} · ${formatDate(a.created_at)}</div>
-              </div>
-              <span class="status-badge ${statusColor(a.art_status)}">${a.art_status || 'rascunho'}</span>
-            </button>`).join('')}
-        </div>
-      </div>
-
-      <!-- Summary -->
-      <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-5">
-        <h3 class="font-semibold text-white text-sm mb-4">Resumo Financeiro</h3>
-        <div class="space-y-4">
-          <div>
-            <div class="text-xs text-slate-500 mb-1">Valor Total em ARTs</div>
-            <div class="text-2xl font-bold text-white font-display">${formatCurrency(totalValue)}</div>
-          </div>
-          <div class="h-px bg-slate-800"></div>
-          <div class="space-y-2">
-            <div class="flex justify-between text-sm"><span class="text-slate-400">Total ARTs</span><span class="text-white font-medium">${arts.length}</span></div>
-            <div class="flex justify-between text-sm"><span class="text-slate-400">Emitidas</span><span class="text-emerald-400 font-medium">${emitidas}</span></div>
-            <div class="flex justify-between text-sm"><span class="text-slate-400">Pendentes</span><span class="text-yellow-400 font-medium">${pendentes}</span></div>
-          </div>
-          <!-- Simple bar chart -->
-          <div class="pt-2">
-            <div class="text-xs text-slate-500 mb-2">Distribuição</div>
-            <div class="space-y-1.5">
-              ${['emitida','pendente','rascunho','cancelada'].map(s => {
-                const count = arts.filter(a=>a.art_status===s).length;
-                const pct = arts.length ? Math.round(count/arts.length*100) : 0;
-                const colors = {emitida:'bg-emerald-500',pendente:'bg-blue-500',rascunho:'bg-yellow-500',cancelada:'bg-red-500'};
-                return `<div><div class="flex justify-between text-[11px] mb-0.5"><span class="text-slate-400 capitalize">${s}</span><span class="text-slate-500">${count}</span></div><div class="h-1.5 bg-slate-800 rounded-full overflow-hidden"><div class="${colors[s]} h-full rounded-full transition-all" style="width:${pct}%"></div></div></div>`;
-              }).join('')}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-function statCard(icon, label, value, iconBg, border) {
-  return `<div class="bg-slate-900/50 border ${border} rounded-xl p-4 card-hover">
-    <div class="flex items-center gap-3 mb-2"><div class="w-9 h-9 rounded-lg ${iconBg} flex items-center justify-center"><i data-lucide="${icon}" class="w-4 h-4"></i></div></div>
-    <div class="text-2xl font-bold text-white">${value}</div>
-    <div class="text-xs text-slate-500 mt-0.5">${label}</div>
-  </div>`;
-}
-
-// ============ ARTS LIST ============
-function renderArtsList() {
-  const arts = [...getArts()].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
-  return `
-  <div class="space-y-4">
-    <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-      <div class="flex gap-2 flex-wrap">
-        <input id="artSearch" oninput="filterArts()" placeholder="Buscar ART..." class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm w-48 text-white placeholder-slate-500">
-        <select id="artStatusFilter" onchange="filterArts()" class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-          <option value="">Todos status</option>
-          <option value="rascunho">Rascunho</option>
-          <option value="pendente">Pendente</option>
-          <option value="emitida">Emitida</option>
-          <option value="cancelada">Cancelada</option>
-        </select>
-      </div>
-      <button onclick="navigate('new-art')" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"><i data-lucide="plus" class="w-4 h-4"></i> Nova ART</button>
-    </div>
-    <div id="artsListContainer" class="space-y-2">
-      ${arts.length===0 ? emptyState('file-text','Nenhuma ART cadastrada','Clique em "Nova ART" para começar') :
-        arts.map(a => artListItem(a)).join('')}
-    </div>
-  </div>`;
-}
-
-function artListItem(a) {
-  return `<div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-4 card-hover flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
-    <div class="flex items-center gap-3 min-w-0">
-      <div class="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center flex-shrink-0"><i data-lucide="file-text" class="w-5 h-5 text-brand-400"></i></div>
-      <div class="min-w-0">
-        <div class="text-sm font-semibold text-white truncate">${a.art_number} — ${a.work_name || 'Sem obra'}</div>
-        <div class="text-xs text-slate-500">${a.client_name || '-'} · ${a.service_desc ? a.service_desc.substring(0,50)+'...' : '-'} · ${formatDate(a.created_at)}</div>
-      </div>
-    </div>
-    <div class="flex items-center gap-2 flex-shrink-0 ml-auto sm:ml-0">
-      <span class="status-badge ${statusColor(a.art_status)}">${a.art_status}</span>
-      <button onclick="navigate('view-art','${a.__backendId}')" class="p-2 rounded-lg hover:bg-slate-800 text-slate-400 transition-colors" title="Ver"><i data-lucide="eye" class="w-4 h-4"></i></button>
-      <button onclick="duplicateArt('${a.__backendId}')" class="p-2 rounded-lg hover:bg-slate-800 text-slate-400 transition-colors" title="Duplicar"><i data-lucide="copy" class="w-4 h-4"></i></button>
-      <button onclick="deleteRecord('${a.__backendId}','ART')" class="p-2 rounded-lg hover:bg-red-500/10 text-red-400 transition-colors" title="Excluir"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-    </div>
-  </div>`;
-}
-
-function filterArts() {
-  const q = (document.getElementById('artSearch')?.value||'').toLowerCase();
-  const s = document.getElementById('artStatusFilter')?.value||'';
-  let arts = [...getArts()].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
-  if(q) arts = arts.filter(a => (a.art_number||'').toLowerCase().includes(q) || (a.work_name||'').toLowerCase().includes(q) || (a.client_name||'').toLowerCase().includes(q));
-  if(s) arts = arts.filter(a => a.art_status === s);
-  const c = document.getElementById('artsListContainer');
-  if(c) c.innerHTML = arts.length === 0 ? emptyState('search','Nenhum resultado','Tente outros termos de busca') : arts.map(a=>artListItem(a)).join('');
-  lucide.createIcons();
-}
-
-// ============ ART FORM ============
-function renderArtForm() {
-  const art = editingId ? allData.find(r => r.__backendId === editingId) : null;
-  const clients = getClients();
-  const works = getWorks();
-  const workTypes = ['Construção Residencial','Construção Comercial','Reforma','Ampliação','Demolição','Projeto Estrutural','Projeto Elétrico','Projeto Hidráulico','Laudo Técnico','Vistoria','Consultoria','Fiscalização','Outros'];
-
-  return `
-  <form onsubmit="saveArt(event)" class="max-w-3xl mx-auto space-y-6">
-    <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-5">
-      <h3 class="text-white font-semibold mb-4 flex items-center gap-2"><i data-lucide="file-text" class="w-4 h-4 text-brand-400"></i> Dados da ART</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label for="artNum" class="block text-xs text-slate-400 mb-1">Número da ART</label>
-          <input id="artNum" value="${art?.art_number || nextArtNumber()}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" readonly>
-        </div>
-        <div>
-          <label for="artStatus" class="block text-xs text-slate-400 mb-1">Status</label>
-          <select id="artStatus" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-            ${['rascunho','pendente','emitida','cancelada','arquivada'].map(s=>`<option value="${s}" ${(art?.art_status||'rascunho')===s?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-5">
-      <h3 class="text-white font-semibold mb-4 flex items-center gap-2"><i data-lucide="building-2" class="w-4 h-4 text-brand-400"></i> Dados da Obra</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="sm:col-span-2">
-          <label for="workName" class="block text-xs text-slate-400 mb-1">Nome da Obra *</label>
-          <input id="workName" required value="${art?.work_name||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Ex: Residência Silva">
-        </div>
-        <div>
-          <label for="workType" class="block text-xs text-slate-400 mb-1">Tipo de Obra *</label>
-          <select id="workType" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-            <option value="">Selecione...</option>
-            ${workTypes.map(t=>`<option ${(art?.work_type||'')===t?'selected':''}>${t}</option>`).join('')}
-          </select>
-        </div>
-        <div>
-          <label for="workAddr" class="block text-xs text-slate-400 mb-1">Endereço da Obra</label>
-          <input id="workAddr" value="${art?.work_address||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Rua, nº, Bairro, Cidade-UF">
-        </div>
-        <div class="sm:col-span-2">
-          <label for="serviceDesc" class="block text-xs text-slate-400 mb-1">Descrição do Serviço *</label>
-          <textarea id="serviceDesc" required rows="3" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white resize-none" placeholder="Descreva os serviços técnicos...">${art?.service_desc||''}</textarea>
-        </div>
-        <div>
-          <label for="startDate" class="block text-xs text-slate-400 mb-1">Data Início</label>
-          <input id="startDate" type="date" value="${art?.start_date||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-        </div>
-        <div>
-          <label for="endDate" class="block text-xs text-slate-400 mb-1">Previsão Término</label>
-          <input id="endDate" type="date" value="${art?.end_date||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-        </div>
-        <div>
-          <label for="contractVal" class="block text-xs text-slate-400 mb-1">Valor do Contrato (R$)</label>
-          <input id="contractVal" type="number" step="0.01" value="${art?.contract_value||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="0,00">
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-5">
-      <h3 class="text-white font-semibold mb-4 flex items-center gap-2"><i data-lucide="users" class="w-4 h-4 text-brand-400"></i> Partes Envolvidas</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label for="clientName" class="block text-xs text-slate-400 mb-1">Cliente / Contratante *</label>
-          <input id="clientName" required list="clientList" value="${art?.client_name||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Nome do cliente">
-          <datalist id="clientList">${clients.map(c=>`<option value="${c.name}">`).join('')}</datalist>
-        </div>
-        <div>
-          <label for="responsible" class="block text-xs text-slate-400 mb-1">Responsável Técnico *</label>
-          <input id="responsible" required value="${art?.responsible||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Nome do engenheiro">
-        </div>
-        <div>
-          <label for="creaNum" class="block text-xs text-slate-400 mb-1">Nº CREA</label>
-          <input id="creaNum" value="${art?.crea_number||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Ex: 123456-D/SP">
-        </div>
-        <div>
-          <label for="companyName" class="block text-xs text-slate-400 mb-1">Empresa Executora</label>
-          <input id="companyName" value="${art?.company_name||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Nome da empresa">
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-5">
-      <h3 class="text-white font-semibold mb-4 flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4 text-brand-400"></i> Observações</h3>
-      <textarea id="artNotes" rows="3" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white resize-none" placeholder="Notas adicionais...">${art?.notes||''}</textarea>
-    </div>
-
-    <div class="flex flex-col sm:flex-row gap-3 justify-end">
-      <button type="button" onclick="navigate('arts')" class="px-5 py-2.5 rounded-lg text-sm text-slate-400 hover:bg-slate-800 transition-colors">Cancelar</button>
-      <button type="submit" id="saveArtBtn" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors">
-        <i data-lucide="save" class="w-4 h-4"></i> ${editingId ? 'Atualizar ART' : 'Salvar ART'}
-      </button>
-    </div>
-  </form>`;
-}
-
-async function saveArt(e) {
-  e.preventDefault();
-  const btn = document.getElementById('saveArtBtn');
-  btn.disabled = true; btn.innerHTML = '<span class="animate-spin">⟳</span> Salvando...';
-
-  const data = {
-    type: 'art',
-    art_number: document.getElementById('artNum').value,
-    art_status: document.getElementById('artStatus').value,
-    work_name: document.getElementById('workName').value,
-    work_type: document.getElementById('workType').value,
-    work_address: document.getElementById('workAddr').value,
-    service_desc: document.getElementById('serviceDesc').value,
-    start_date: document.getElementById('startDate').value,
-    end_date: document.getElementById('endDate').value,
-    contract_value: parseFloat(document.getElementById('contractVal').value) || 0,
-    client_name: document.getElementById('clientName').value,
-    responsible: document.getElementById('responsible').value,
-    crea_number: document.getElementById('creaNum').value,
-    company_name: document.getElementById('companyName').value,
-    notes: document.getElementById('artNotes').value,
-    created_at: editingId ? (allData.find(r=>r.__backendId===editingId)?.created_at || new Date().toISOString()) : new Date().toISOString(),
-    name: '', document: '', address: '', city: '', state: '', phone: '', email: '', role: ''
+  const defaultConfig = {
+    app_title: 'ART Obra Pro',
+    company_brand: 'Bragion Projetos',
+    dashboard_greeting: 'Painel de Controle',
+    background_color: '#080d1a',
+    surface_color: '#0f172a',
+    text_color: '#e2e8f0',
+    primary_action_color: '#ea7512',
+    secondary_action_color: '#64748b',
+    font_family: 'DM Sans',
+    font_size: 14
   };
 
-  let result;
-  if(editingId) {
-    const existing = allData.find(r=>r.__backendId===editingId);
-    result = await window.dataSdk.update({...existing, ...data});
-  } else {
-    if(allData.length >= 999) { showToast('Limite de 999 registros atingido!','error'); btn.disabled=false; btn.innerHTML='<i data-lucide="save" class="w-4 h-4"></i> Salvar ART'; lucide.createIcons(); return; }
-    result = await window.dataSdk.create(data);
-  }
-  btn.disabled = false;
-  if(result.isOk) { showToast(editingId ? 'ART atualizada!' : 'ART salva com sucesso!'); navigate('arts'); }
-  else { showToast('Erro ao salvar ART','error'); btn.innerHTML='<i data-lucide="save" class="w-4 h-4"></i> Salvar ART'; lucide.createIcons(); }
-}
+  let appConfig = { ...defaultConfig };
 
-async function duplicateArt(id) {
-  const art = allData.find(r => r.__backendId === id);
-  if(!art) return;
-  if(allData.length >= 999) { showToast('Limite de registros atingido!','error'); return; }
-  const dup = {...art};
-  delete dup.__backendId;
-  dup.art_number = nextArtNumber();
-  dup.art_status = 'rascunho';
-  dup.created_at = new Date().toISOString();
-  const result = await window.dataSdk.create(dup);
-  if(result.isOk) showToast('ART duplicada como rascunho!');
-  else showToast('Erro ao duplicar','error');
-}
-
-// ============ ART VIEW ============
-function renderArtView() {
-  const art = allData.find(r => r.__backendId === editingId);
-  if(!art) return emptyState('file-text','ART não encontrada','');
-
-  return `
-  <div class="max-w-3xl mx-auto space-y-4">
-    <div class="flex flex-wrap gap-2 mb-2">
-      <button onclick="navigate('edit-art','${art.__backendId}')" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"><i data-lucide="edit" class="w-4 h-4"></i> Editar</button>
-      <button onclick="duplicateArt('${art.__backendId}')" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"><i data-lucide="copy" class="w-4 h-4"></i> Duplicar</button>
-      <button onclick="changeArtStatus('${art.__backendId}','emitida')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"><i data-lucide="check-circle" class="w-4 h-4"></i> Emitir</button>
-    </div>
-
-    <!-- ART Document Preview -->
-    <div class="bg-white text-slate-800 rounded-xl overflow-hidden shadow-xl">
-      <div class="bg-gradient-to-r from-slate-800 to-slate-700 p-6 text-white">
-        <div class="flex items-start justify-between flex-wrap gap-4">
-          <div>
-            <div class="text-xs tracking-widest text-slate-300 mb-1">ANOTAÇÃO DE RESPONSABILIDADE TÉCNICA</div>
-            <div class="text-2xl font-display font-bold">${art.art_number}</div>
-          </div>
-          <span class="status-badge ${statusColor(art.art_status)} text-xs">${(art.art_status||'rascunho').toUpperCase()}</span>
-        </div>
-      </div>
-      <div class="p-6 space-y-5 text-sm">
-        ${docSection('Dados da Obra', [
-          ['Nome da Obra', art.work_name],
-          ['Tipo', art.work_type],
-          ['Endereço', art.work_address],
-          ['Descrição do Serviço', art.service_desc],
-          ['Período', `${formatDate(art.start_date)} a ${formatDate(art.end_date)}`],
-          ['Valor do Contrato', formatCurrency(art.contract_value)]
-        ])}
-        ${docSection('Partes Envolvidas', [
-          ['Cliente/Contratante', art.client_name],
-          ['Responsável Técnico', art.responsible],
-          ['Nº CREA', art.crea_number],
-          ['Empresa Executora', art.company_name]
-        ])}
-        ${art.notes ? docSection('Observações', [['', art.notes]]) : ''}
-        <div class="border-t border-slate-200 pt-4 mt-6 grid grid-cols-2 gap-8">
-          <div class="text-center"><div class="border-t-2 border-slate-400 pt-2 mt-12 text-xs text-slate-500">Responsável Técnico</div><div class="text-xs font-medium mt-1">${art.responsible || '-'}</div></div>
-          <div class="text-center"><div class="border-t-2 border-slate-400 pt-2 mt-12 text-xs text-slate-500">Contratante</div><div class="text-xs font-medium mt-1">${art.client_name || '-'}</div></div>
-        </div>
-        <div class="text-center text-[10px] text-slate-400 mt-4">Emitido em ${formatDate(art.created_at)} · ART Obra Pro — Bragion Projetos</div>
-      </div>
-    </div>
-  </div>`;
-}
-
-function docSection(title, fields) {
-  return `<div><div class="text-xs font-bold text-brand-600 uppercase tracking-wider mb-2">${title}</div><div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">${
-    fields.map(([l,v]) => l ? `<div><span class="text-slate-500 text-xs">${l}:</span><div class="font-medium text-slate-800">${v||'-'}</div></div>` : `<div class="sm:col-span-2"><div class="text-slate-700">${v||'-'}</div></div>`).join('')
-  }</div></div>`;
-}
-
-async function changeArtStatus(id, status) {
-  const art = allData.find(r=>r.__backendId===id);
-  if(!art) return;
-  const result = await window.dataSdk.update({...art, art_status: status});
-  if(result.isOk) { showToast(`ART ${status}!`); navigate('view-art', id); }
-  else showToast('Erro ao alterar status','error');
-}
-
-// ============ CLIENT FORM / LIST ============
-function renderClientsList() {
-  const clients = getClients();
-  return `
-  <div class="space-y-4">
-    <div class="flex justify-between items-center flex-wrap gap-3">
-      <input id="clientSearch" oninput="filterClients()" placeholder="Buscar cliente..." class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm w-48 text-white placeholder-slate-500">
-      <button onclick="navigate('new-client')" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"><i data-lucide="user-plus" class="w-4 h-4"></i> Novo Cliente</button>
-    </div>
-    <div id="clientsListContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-      ${clients.length===0 ? '<div class="sm:col-span-3">'+emptyState('users','Nenhum cliente','Cadastre seu primeiro cliente')+'</div>' :
-        clients.map(c => `
-        <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-4 card-hover">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-full bg-brand-500/20 flex items-center justify-center text-brand-400 font-bold text-sm">${(c.name||'?')[0].toUpperCase()}</div>
-            <div class="min-w-0 flex-1"><div class="text-sm font-semibold text-white truncate">${c.name}</div><div class="text-xs text-slate-500">${c.document||'Sem documento'}</div></div>
-          </div>
-          <div class="text-xs text-slate-400 space-y-1 mb-3">
-            ${c.email ? `<div class="flex items-center gap-1.5"><i data-lucide="mail" class="w-3 h-3"></i>${c.email}</div>` : ''}
-            ${c.phone ? `<div class="flex items-center gap-1.5"><i data-lucide="phone" class="w-3 h-3"></i>${c.phone}</div>` : ''}
-            ${c.city ? `<div class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3 h-3"></i>${c.city}${c.state?' - '+c.state:''}</div>` : ''}
-          </div>
-          <div class="flex gap-2">
-            <button onclick="deleteRecord('${c.__backendId}','Cliente')" class="text-xs text-red-400 hover:text-red-300 transition-colors">Excluir</button>
-          </div>
-        </div>`).join('')}
-    </div>
-  </div>`;
-}
-
-function filterClients() {
-  const q = (document.getElementById('clientSearch')?.value||'').toLowerCase();
-  let clients = getClients();
-  if(q) clients = clients.filter(c=>(c.name||'').toLowerCase().includes(q)||(c.email||'').toLowerCase().includes(q));
-  const cont = document.getElementById('clientsListContainer');
-  if(cont) { cont.innerHTML = clients.length===0 ? '<div class="sm:col-span-3">'+emptyState('search','Nenhum resultado','')+'</div>' : clients.map(c=>`
-    <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-4 card-hover">
-      <div class="flex items-center gap-3 mb-2"><div class="w-10 h-10 rounded-full bg-brand-500/20 flex items-center justify-center text-brand-400 font-bold text-sm">${(c.name||'?')[0].toUpperCase()}</div><div class="min-w-0 flex-1"><div class="text-sm font-semibold text-white truncate">${c.name}</div><div class="text-xs text-slate-500">${c.document||''}</div></div></div>
-      <div class="text-xs text-slate-400">${c.email||''} ${c.phone?'· '+c.phone:''}</div>
-    </div>`).join(''); lucide.createIcons(); }
-}
-
-function renderClientForm() {
-  return `
-  <form onsubmit="saveClient(event)" class="max-w-lg mx-auto bg-slate-900/50 border border-slate-800/50 rounded-xl p-5 space-y-4">
-    <h3 class="text-white font-semibold flex items-center gap-2"><i data-lucide="user-plus" class="w-4 h-4 text-brand-400"></i> Cadastrar Cliente</h3>
-    <div><label for="cName" class="block text-xs text-slate-400 mb-1">Nome / Razão Social *</label><input id="cName" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-    <div class="grid grid-cols-2 gap-3">
-      <div><label for="cDoc" class="block text-xs text-slate-400 mb-1">CPF / CNPJ</label><input id="cDoc" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-      <div><label for="cPhone" class="block text-xs text-slate-400 mb-1">Telefone</label><input id="cPhone" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-    </div>
-    <div><label for="cEmail" class="block text-xs text-slate-400 mb-1">E-mail</label><input id="cEmail" type="email" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-    <div><label for="cAddr" class="block text-xs text-slate-400 mb-1">Endereço</label><input id="cAddr" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-    <div class="grid grid-cols-2 gap-3">
-      <div><label for="cCity" class="block text-xs text-slate-400 mb-1">Cidade</label><input id="cCity" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-      <div><label for="cState" class="block text-xs text-slate-400 mb-1">Estado</label><input id="cState" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-    </div>
-    <div class="flex gap-3 justify-end pt-2">
-      <button type="button" onclick="navigate('clients')" class="px-4 py-2 rounded-lg text-sm text-slate-400 hover:bg-slate-800 transition-colors">Cancelar</button>
-      <button type="submit" id="saveClientBtn" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition-colors">Salvar</button>
-    </div>
-  </form>`;
-}
-
-async function saveClient(e) {
-  e.preventDefault();
-  const btn = document.getElementById('saveClientBtn');
-  btn.disabled = true; btn.textContent = 'Salvando...';
-  if(allData.length >= 999) { showToast('Limite de registros atingido!','error'); btn.disabled=false; btn.textContent='Salvar'; return; }
-  const result = await window.dataSdk.create({
-    type:'client', name:document.getElementById('cName').value, document:document.getElementById('cDoc').value,
-    phone:document.getElementById('cPhone').value, email:document.getElementById('cEmail').value,
-    address:document.getElementById('cAddr').value, city:document.getElementById('cCity').value, state:document.getElementById('cState').value,
-    art_number:'', art_status:'', work_name:'', work_type:'', work_address:'', service_desc:'',
-    start_date:'', end_date:'', contract_value:0, responsible:'', client_name:'', company_name:'',
-    created_at:new Date().toISOString(), notes:'', crea_number:'', role:''
-  });
-  btn.disabled = false; btn.textContent = 'Salvar';
-  if(result.isOk) { showToast('Cliente cadastrado!'); navigate('clients'); }
-  else showToast('Erro ao salvar','error');
-}
-
-// ============ WORKS ============
-function renderWorksList() {
-  const works = getWorks();
-  return `
-  <div class="space-y-4">
-    <div class="flex justify-end"><button onclick="navigate('new-work')" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"><i data-lucide="plus" class="w-4 h-4"></i> Nova Obra</button></div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      ${works.length===0 ? '<div class="sm:col-span-2">'+emptyState('building-2','Nenhuma obra','Cadastre sua primeira obra')+'</div>' :
-        works.map(w => `
-        <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-4 card-hover">
-          <div class="flex items-start justify-between mb-2">
-            <div><div class="text-sm font-semibold text-white">${w.work_name}</div><div class="text-xs text-brand-400">${w.work_type||'-'}</div></div>
-            <button onclick="deleteRecord('${w.__backendId}','Obra')" class="p-1 text-red-400 hover:text-red-300"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-          </div>
-          <div class="text-xs text-slate-400 space-y-1">
-            ${w.work_address?`<div><i data-lucide="map-pin" class="w-3 h-3 inline"></i> ${w.work_address}</div>`:''}
-            <div>${formatDate(w.start_date)} — ${formatDate(w.end_date)}</div>
-            <div class="font-medium text-white">${formatCurrency(w.contract_value)}</div>
-          </div>
-        </div>`).join('')}
-    </div>
-  </div>`;
-}
-
-function renderWorkForm() {
-  const workTypes = ['Construção Residencial','Construção Comercial','Reforma','Ampliação','Demolição','Projeto Estrutural','Laudo Técnico','Vistoria','Outros'];
-  return `
-  <form onsubmit="saveWork(event)" class="max-w-lg mx-auto bg-slate-900/50 border border-slate-800/50 rounded-xl p-5 space-y-4">
-    <h3 class="text-white font-semibold flex items-center gap-2"><i data-lucide="landmark" class="w-4 h-4 text-brand-400"></i> Cadastrar Obra</h3>
-    <div><label for="wName" class="block text-xs text-slate-400 mb-1">Nome da Obra *</label><input id="wName" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-    <div><label for="wType" class="block text-xs text-slate-400 mb-1">Tipo *</label><select id="wType" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"><option value="">Selecione...</option>${workTypes.map(t=>`<option>${t}</option>`).join('')}</select></div>
-    <div><label for="wAddr" class="block text-xs text-slate-400 mb-1">Endereço</label><input id="wAddr" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-    <div class="grid grid-cols-2 gap-3">
-      <div><label for="wStart" class="block text-xs text-slate-400 mb-1">Início</label><input id="wStart" type="date" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-      <div><label for="wEnd" class="block text-xs text-slate-400 mb-1">Término</label><input id="wEnd" type="date" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-    </div>
-    <div><label for="wVal" class="block text-xs text-slate-400 mb-1">Valor (R$)</label><input id="wVal" type="number" step="0.01" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-    <div class="flex gap-3 justify-end pt-2">
-      <button type="button" onclick="navigate('works')" class="px-4 py-2 rounded-lg text-sm text-slate-400 hover:bg-slate-800 transition-colors">Cancelar</button>
-      <button type="submit" id="saveWorkBtn" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition-colors">Salvar</button>
-    </div>
-  </form>`;
-}
-
-async function saveWork(e) {
-  e.preventDefault();
-  const btn = document.getElementById('saveWorkBtn');
-  btn.disabled = true; btn.textContent = 'Salvando...';
-  if(allData.length >= 999) { showToast('Limite de registros atingido!','error'); btn.disabled=false; btn.textContent='Salvar'; return; }
-  const result = await window.dataSdk.create({
-    type:'work', work_name:document.getElementById('wName').value, work_type:document.getElementById('wType').value,
-    work_address:document.getElementById('wAddr').value, start_date:document.getElementById('wStart').value,
-    end_date:document.getElementById('wEnd').value, contract_value:parseFloat(document.getElementById('wVal').value)||0,
-    name:'', document:'', address:'', city:'', state:'', phone:'', email:'',
-    art_number:'', art_status:'', service_desc:'', responsible:'', client_name:'', company_name:'',
-    created_at:new Date().toISOString(), notes:'', crea_number:'', role:''
-  });
-  btn.disabled = false; btn.textContent = 'Salvar';
-  if(result.isOk) { showToast('Obra cadastrada!'); navigate('works'); }
-  else showToast('Erro ao salvar','error');
-}
-
-// ============ REPORTS ============
-function renderReports() {
-  const arts = getArts(), clients = getClients(), works = getWorks();
-  const byType = {};
-  arts.forEach(a => { const t = a.work_type||'Outros'; byType[t]=(byType[t]||0)+1; });
-  const totalVal = arts.reduce((s,a)=>s+(a.contract_value||0),0);
-  const avgVal = arts.length ? totalVal/arts.length : 0;
-
-  return `
-  <div class="space-y-6">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-      ${statCard('file-text','Total ARTs',arts.length,'bg-brand-500/10 text-brand-400','border-brand-500/20')}
-      ${statCard('users','Total Clientes',clients.length,'bg-blue-500/10 text-blue-400','border-blue-500/20')}
-      ${statCard('building-2','Total Obras',works.length,'bg-emerald-500/10 text-emerald-400','border-emerald-500/20')}
-      ${statCard('dollar-sign','Valor Médio',formatCurrency(avgVal),'bg-yellow-500/10 text-yellow-400','border-yellow-500/20')}
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-5">
-        <h3 class="text-white font-semibold text-sm mb-4">ARTs por Tipo de Obra</h3>
-        <div class="space-y-2">
-          ${Object.entries(byType).sort((a,b)=>b[1]-a[1]).map(([t,c]) => {
-            const pct = arts.length ? Math.round(c/arts.length*100) : 0;
-            return `<div><div class="flex justify-between text-xs mb-1"><span class="text-slate-400">${t}</span><span class="text-white font-medium">${c} (${pct}%)</span></div><div class="h-2 bg-slate-800 rounded-full"><div class="h-full bg-brand-500 rounded-full" style="width:${pct}%"></div></div></div>`;
-          }).join('')}
-          ${Object.keys(byType).length===0?'<div class="text-center text-slate-500 text-sm py-4">Sem dados</div>':''}
-        </div>
-      </div>
-
-      <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-5">
-        <h3 class="text-white font-semibold text-sm mb-4">ARTs por Status</h3>
-        <div class="space-y-3">
-          ${['emitida','pendente','rascunho','cancelada','arquivada'].map(s => {
-            const c = arts.filter(a=>a.art_status===s).length;
-            return `<div class="flex items-center gap-3"><span class="status-badge ${statusColor(s)} min-w-[80px] text-center">${s}</span><div class="flex-1 h-2 bg-slate-800 rounded-full"><div class="h-full bg-slate-600 rounded-full" style="width:${arts.length?Math.round(c/arts.length*100):0}%"></div></div><span class="text-xs text-white font-medium w-6 text-right">${c}</span></div>`;
-          }).join('')}
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-5">
-      <h3 class="text-white font-semibold text-sm mb-2">Valor Total em Contratos</h3>
-      <div class="text-3xl font-display font-bold text-brand-400">${formatCurrency(totalVal)}</div>
-    </div>
-  </div>`;
-}
-
-// ============ DELETE ============
-async function deleteRecord(id, label) {
-  showConfirm(`Tem certeza que deseja excluir este registro de ${label}?`, async () => {
-    const rec = allData.find(r => r.__backendId === id);
-    if(!rec) return;
-    const result = await window.dataSdk.delete(rec);
-    if(result.isOk) showToast(`${label} excluído(a)!`);
-    else showToast('Erro ao excluir','error');
-  });
-}
-
-// ============ EMPTY STATE ============
-function emptyState(icon, title, sub) {
-  return `<div class="text-center py-12"><div class="w-14 h-14 mx-auto rounded-full bg-slate-800 flex items-center justify-center mb-3"><i data-lucide="${icon}" class="w-6 h-6 text-slate-500"></i></div><div class="text-sm text-slate-400 font-medium">${title}</div><div class="text-xs text-slate-600 mt-1">${sub}</div></div>`;
-}
-
-// ============ ELEMENT SDK ============
-window.elementSdk.init({
-  defaultConfig,
-  onConfigChange: async (config) => {
-    const cfg = {...defaultConfig, ...config};
-    document.getElementById('sidebarTitle').textContent = cfg.app_title;
-    document.getElementById('sidebarBrand').textContent = cfg.company_brand.toUpperCase();
-    const pt = document.getElementById('pageTitle');
-    if(currentPage === 'dashboard') pt.textContent = cfg.dashboard_greeting;
-
-    document.body.style.backgroundColor = cfg.background_color;
-    document.body.style.color = cfg.text_color;
-    document.body.style.fontFamily = `${cfg.font_family}, DM Sans, sans-serif`;
-    document.body.style.fontSize = cfg.font_size + 'px';
-
-    document.querySelectorAll('.bg-brand-500, [class*="bg-brand-5"]').forEach(el => {
-      if(el.tagName==='BUTTON'||el.classList.contains('bg-brand-500')) el.style.backgroundColor = cfg.primary_action_color;
-    });
-  },
-  mapToCapabilities: (config) => {
-    const cfg = {...defaultConfig, ...config};
-    return {
-      recolorables: [
-        { get:()=>cfg.background_color, set:(v)=>{ config.background_color=v; window.elementSdk.setConfig({background_color:v}); }},
-        { get:()=>cfg.surface_color, set:(v)=>{ config.surface_color=v; window.elementSdk.setConfig({surface_color:v}); }},
-        { get:()=>cfg.text_color, set:(v)=>{ config.text_color=v; window.elementSdk.setConfig({text_color:v}); }},
-        { get:()=>cfg.primary_action_color, set:(v)=>{ config.primary_action_color=v; window.elementSdk.setConfig({primary_action_color:v}); }},
-        { get:()=>cfg.secondary_action_color, set:(v)=>{ config.secondary_action_color=v; window.elementSdk.setConfig({secondary_action_color:v}); }}
-      ],
-      borderables: [],
-      fontEditable: { get:()=>cfg.font_family, set:(v)=>{ config.font_family=v; window.elementSdk.setConfig({font_family:v}); }},
-      fontSizeable: { get:()=>cfg.font_size, set:(v)=>{ config.font_size=v; window.elementSdk.setConfig({font_size:v}); }}
-    };
-  },
-  mapToEditPanelValues: (config) => {
-    const cfg = {...defaultConfig, ...config};
-    return new Map([
-      ['app_title', cfg.app_title],
-      ['company_brand', cfg.company_brand],
-      ['dashboard_greeting', cfg.dashboard_greeting]
-    ]);
-  }
-});
-
-// ============ DATA SDK ============
-(async () => {
-  const result = await window.dataSdk.init({
-    onDataChanged(data) {
-      allData = data;
-      renderPage();
+  // Load / Save Data
+  function loadData() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      allData = JSON.parse(stored);
+    } else {
+      allData = [];
+      // seeding exemplo opcional (nenhum dado padrão para começar limpo)
     }
-  });
-  if(!result.isOk) console.error('Data SDK init failed');
-})();
+    triggerDataChange();
+  }
 
-lucide.createIcons();
+  function saveDataToLocal() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+  }
+
+  function triggerDataChange() {
+    dataChangeListeners.forEach(fn => fn(allData));
+  }
+
+  // Data SDK compatible methods
+  const dataSdk = {
+    init: async ({ onDataChanged }) => {
+      dataChangeListeners.push(onDataChanged);
+      loadData();
+      return { isOk: true };
+    },
+    create: async (record) => {
+      const newId = Date.now() + '-' + Math.random().toString(36).substr(2, 8);
+      const newRecord = { ...record, __backendId: newId, __createdAt: new Date().toISOString() };
+      allData.push(newRecord);
+      saveDataToLocal();
+      triggerDataChange();
+      return { isOk: true, data: newRecord };
+    },
+    update: async (record) => {
+      const index = allData.findIndex(r => r.__backendId === record.__backendId);
+      if (index !== -1) {
+        allData[index] = { ...record };
+        saveDataToLocal();
+        triggerDataChange();
+        return { isOk: true };
+      }
+      return { isOk: false };
+    },
+    delete: async (record) => {
+      allData = allData.filter(r => r.__backendId !== record.__backendId);
+      saveDataToLocal();
+      triggerDataChange();
+      return { isOk: true };
+    }
+  };
+
+  // Config Manager
+  function loadConfig() {
+    const stored = localStorage.getItem(CONFIG_KEY);
+    if (stored) appConfig = { ...defaultConfig, ...JSON.parse(stored) };
+    else appConfig = { ...defaultConfig };
+    applyConfigToUI();
+  }
+  function saveConfig() {
+    localStorage.setItem(CONFIG_KEY, JSON.stringify(appConfig));
+    applyConfigToUI();
+  }
+  function applyConfigToUI() {
+    document.getElementById('sidebarTitle').textContent = appConfig.app_title;
+    document.getElementById('sidebarBrand').textContent = appConfig.company_brand.toUpperCase();
+    if (currentPage === 'dashboard') document.getElementById('pageTitle').textContent = appConfig.dashboard_greeting;
+    document.body.style.backgroundColor = appConfig.background_color;
+    document.body.style.color = appConfig.text_color;
+    document.body.style.fontFamily = `${appConfig.font_family}, 'DM Sans', sans-serif`;
+    document.body.style.fontSize = appConfig.font_size + 'px';
+    // Atualizar variáveis de cor para elementos dinâmicos (botões principais)
+    document.querySelectorAll('.bg-brand-500, .btn-primary').forEach(el => {
+      if (el.classList.contains('bg-brand-500')) el.style.backgroundColor = appConfig.primary_action_color;
+    });
+    const style = document.createElement('style');
+    style.id = 'dynamic-primary-style';
+    const oldStyle = document.getElementById('dynamic-primary-style');
+    if (oldStyle) oldStyle.remove();
+    style.id = 'dynamic-primary-style';
+    style.textContent = `.bg-brand-500 { background-color: ${appConfig.primary_action_color} !important; } .hover\\:bg-brand-600:hover { background-color: ${appConfig.primary_action_color}cc !important; } .text-brand-400 { color: ${appConfig.primary_action_color} !important; } .border-brand-500 { border-color: ${appConfig.primary_action_color} !important; } .from-brand-500 { --tw-gradient-from: ${appConfig.primary_action_color} !important; } .to-brand-700 { --tw-gradient-to: ${appConfig.primary_action_color}dd !important; }`;
+    document.head.appendChild(style);
+  }
+  function updateConfig(newConfig) {
+    appConfig = { ...appConfig, ...newConfig };
+    saveConfig();
+  }
+
+  // helpers
+  function getByType(t) { return allData.filter(r => r.type === t); }
+  function getArts() { return getByType('art'); }
+  function getClients() { return getByType('client'); }
+  function getWorks() { return getByType('work'); }
+  function nextArtNumber() { const arts = getArts(); return 'ART-' + String(arts.length + 1).padStart(4, '0'); }
+  function formatCurrency(v) { return 'R$ ' + Number(v||0).toLocaleString('pt-BR', {minimumFractionDigits:2}); }
+  function formatDate(d) { if(!d) return '-'; const dt = new Date(d); return dt.toLocaleDateString('pt-BR'); }
+  function statusColor(s) { const m = { rascunho:'bg-yellow-500/20 text-yellow-400', pendente:'bg-blue-500/20 text-blue-400', emitida:'bg-emerald-500/20 text-emerald-400', cancelada:'bg-red-500/20 text-red-400', arquivada:'bg-slate-500/20 text-slate-400' }; return m[s] || m.rascunho; }
+  function showToast(msg, type='success') { const t = document.createElement('div'); t.className = `toast ${type==='error'?'bg-red-600':'bg-emerald-600'}`; t.textContent = msg; document.getElementById('toastContainer').appendChild(t); setTimeout(() => t.remove(), 3000); }
+  function showConfirm(msg, cb) { document.getElementById('confirmMsg').textContent = msg; document.getElementById('confirmModal').style.display = 'flex'; confirmCallback = cb; document.getElementById('confirmBtn').onclick = () => { closeConfirm(); if(confirmCallback) confirmCallback(); }; }
+  function closeConfirm() { document.getElementById('confirmModal').style.display = 'none'; confirmCallback = null; }
+  function toggleSidebar() { const s = document.getElementById('sidebar'); const o = document.getElementById('mobileOverlay'); s.classList.toggle('-translate-x-full'); o.classList.toggle('open'); }
+  function updateNotifBadge() { const pending = getArts().filter(a => a.art_status === 'pendente' || a.art_status === 'rascunho').length; const b = document.getElementById('notifBadge'); if(pending > 0) { b.textContent = pending; b.classList.remove('hidden'); } else b.classList.add('hidden'); }
+
+  // Navegação e Renderização
+  function navigate(page, id = null) {
+    currentPage = page;
+    editingId = id;
+    document.querySelectorAll('.sidebar-link').forEach(el => {
+      el.classList.remove('active', 'text-white');
+      el.classList.add('text-slate-400');
+      if(el.dataset.nav === page) { el.classList.add('active', 'text-white'); el.classList.remove('text-slate-400'); }
+    });
+    if(window.innerWidth < 1024 && !document.getElementById('sidebar').classList.contains('-translate-x-full')) toggleSidebar();
+    const titles = { dashboard: appConfig.dashboard_greeting, works:'Obras', clients:'Clientes', arts:'ARTs Emitidas', 'new-art':'Nova ART', 'edit-art':'Editar ART', reports:'Relatórios', 'view-art':'Detalhes da ART', 'new-client':'Novo Cliente', 'new-work':'Nova Obra' };
+    document.getElementById('pageTitle').textContent = titles[page] || page;
+    renderPage();
+  }
+
+  function renderPage() {
+    const container = document.getElementById('pageContent');
+    container.className = 'p-4 lg:p-6 fade-in';
+    switch(currentPage) {
+      case 'dashboard': container.innerHTML = renderDashboard(); break;
+      case 'works': container.innerHTML = renderWorksList(); break;
+      case 'clients': container.innerHTML = renderClientsList(); break;
+      case 'arts': container.innerHTML = renderArtsList(); break;
+      case 'new-art': case 'edit-art': container.innerHTML = renderArtForm(); break;
+      case 'view-art': container.innerHTML = renderArtView(); break;
+      case 'new-client': container.innerHTML = renderClientForm(); break;
+      case 'new-work': container.innerHTML = renderWorkForm(); break;
+      case 'reports': container.innerHTML = renderReports(); break;
+      default: container.innerHTML = renderDashboard();
+    }
+    lucide.createIcons();
+    updateNotifBadge();
+  }
+
+  // DASHBOARD
+  function renderDashboard() {
+    const arts = getArts(), clients = getClients(), works = getWorks();
+    const emitidas = arts.filter(a=>a.art_status==='emitida').length;
+    const pendentes = arts.filter(a=>a.art_status==='pendente'||a.art_status==='rascunho').length;
+    const totalValue = arts.reduce((s,a)=>s+(a.contract_value||0),0);
+    const recentArts = [...arts].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
+    return `<div class="space-y-6"><div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">${statCard('file-text', 'ARTs Emitidas', emitidas, 'bg-emerald-500/10 text-emerald-400')}${statCard('clock', 'Pendentes', pendentes, 'bg-yellow-500/10 text-yellow-400')}${statCard('building-2', 'Obras Ativas', works.length, 'bg-blue-500/10 text-blue-400')}${statCard('users', 'Clientes', clients.length, 'bg-brand-500/10 text-brand-400')}</div><div class="grid grid-cols-1 sm:grid-cols-3 gap-3"><button onclick="navigate('new-art')" class="card-hover bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl p-4 text-left text-white"><i data-lucide="plus-circle" class="w-6 h-6 mb-2"></i><div class="font-semibold">Nova ART</div><div class="text-xs text-brand-100 mt-1">Emitir anotação</div></button><button onclick="navigate('new-client')" class="card-hover bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 text-left hover:border-brand-500/30"><i data-lucide="user-plus" class="w-6 h-6 mb-2 text-brand-400"></i><div class="font-semibold text-white">Novo Cliente</div><div class="text-xs text-slate-400 mt-1">Cadastrar cliente</div></button><button onclick="navigate('new-work')" class="card-hover bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 text-left hover:border-brand-500/30"><i data-lucide="landmark" class="w-6 h-6 mb-2 text-brand-400"></i><div class="font-semibold text-white">Nova Obra</div><div class="text-xs text-slate-400 mt-1">Registrar obra</div></button></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-4"><div class="lg:col-span-2 bg-slate-900/50 border border-slate-800/50 rounded-xl"><div class="px-5 py-4 border-b border-slate-800/50 flex justify-between"><h3 class="font-semibold text-white text-sm">ARTs Recentes</h3><button onclick="navigate('arts')" class="text-xs text-brand-400">Ver todas →</button></div><div class="p-2">${recentArts.length===0?'<div class="text-center py-8 text-slate-500 text-sm">Nenhuma ART emitida ainda</div>':recentArts.map(a=>`<button onclick="navigate('view-art','${a.__backendId}')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-800/50 text-left"><div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center"><i data-lucide="file-text" class="w-4 h-4 text-brand-400"></i></div><div class="flex-1"><div class="text-sm text-white font-medium truncate">${a.art_number} — ${a.work_name||'Sem obra'}</div><div class="text-xs text-slate-500">${a.client_name||'-'} · ${formatDate(a.created_at)}</div></div><span class="status-badge ${statusColor(a.art_status)}">${a.art_status||'rascunho'}</span></button>`).join('')}</div></div><div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-5"><h3 class="font-semibold text-white text-sm mb-4">Resumo Financeiro</h3><div class="space-y-4"><div><div class="text-xs text-slate-500 mb-1">Valor Total em ARTs</div><div class="text-2xl font-bold text-white font-display">${formatCurrency(totalValue)}</div></div><div class="h-px bg-slate-800"></div><div class="space-y-2"><div class="flex justify-between text-sm"><span class="text-slate-400">Total ARTs</span><span class="text-white font-medium">${arts.length}</span></div><div class="flex justify-between text-sm"><span class="text-slate-400">Emitidas</span><span class="text-emerald-400">${emitidas}</span></div><div class="flex justify-between text-sm"><span class="text-slate-400">Pendentes</span><span class="text-yellow-400">${pendentes}</span></div></div></div></div></div></div>`;
+  }
+  function statCard(icon, label, value, iconBg) { return `<div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-4 card-hover"><div class="flex items-center gap-3 mb-2"><div class="w-9 h-9 rounded-lg ${iconBg} flex items-center justify-center"><i data-lucide="${icon}" class="w-4 h-4"></i></div></div><div class="text-2xl font-bold text-white">${value}</div><div class="text-xs text-slate-500 mt-0.5">${label}</div></div>`; }
+
+  // ARTS LIST
+  function renderArtsList() { const arts = [...getArts()].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)); return `<div class="space-y-4"><div class="flex flex-wrap gap-3 justify-between"><div class="flex gap-2 flex-wrap"><input id="artSearch" oninput="filterArts()" placeholder="Buscar ART..." class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm w-48 text-white"><select id="artStatusFilter" onchange="filterArts()" class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"><option value="">Todos status</option><option value="rascunho">Rascunho</option><option value="pendente">Pendente</option><option value="emitida">Emitida</option><option value="cancelada">Cancelada</option></select></div><button onclick="navigate('new-art')" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> Nova ART</button></div><div id="artsListContainer" class="space-y-2">${arts.length===0?'<div class="text-center py-12 text-slate-500">Nenhuma ART cadastrada</div>':arts.map(a=>artListItem(a)).join('')}</div></div>`; }
+  function artListItem(a) { return `<div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center"><i data-lucide="file-text" class="w-5 h-5 text-brand-400"></i></div><div><div class="text-sm font-semibold text-white">${a.art_number} — ${a.work_name||'Sem obra'}</div><div class="text-xs text-slate-500">${a.client_name||'-'} · ${formatDate(a.created_at)}</div></div></div><div class="flex items-center gap-2"><span class="status-badge ${statusColor(a.art_status)}">${a.art_status}</span><button onclick="navigate('view-art','${a.__backendId}')" class="p-2 rounded-lg hover:bg-slate-800"><i data-lucide="eye" class="w-4 h-4"></i></button><button onclick="duplicateArt('${a.__backendId}')" class="p-2 rounded-lg hover:bg-slate-800"><i data-lucide="copy" class="w-4 h-4"></i></button><button onclick="deleteRecord('${a.__backendId}','ART')" class="p-2 rounded-lg hover:bg-red-500/10 text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></div>`; }
+  function filterArts() { const q = document.getElementById('artSearch')?.value.toLowerCase()||''; const s = document.getElementById('artStatusFilter')?.value||''; let arts = [...getArts()].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)); if(q) arts = arts.filter(a=>(a.art_number||'').toLowerCase().includes(q)||(a.work_name||'').toLowerCase().includes(q)); if(s) arts = arts.filter(a=>a.art_status===s); const c = document.getElementById('artsListContainer'); if(c) c.innerHTML = arts.length===0?'<div class="text-center py-12 text-slate-500">Nenhum resultado</div>':arts.map(a=>artListItem(a)).join(''); lucide.createIcons(); }
+  
+  // Art Form & Save
+  function renderArtForm() { const art = editingId ? allData.find(r=>r.__backendId===editingId) : null; const clients = getClients(); const workTypes = ['Construção Residencial','Construção Comercial','Reforma','Ampliação','Demolição','Projeto Estrutural','Projeto Elétrico','Laudo Técnico','Vistoria','Outros']; return `<form onsubmit="saveArt(event)" class="max-w-3xl mx-auto space-y-6"><div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-5 space-y-4"><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="text-xs text-slate-400">Número ART</label><input id="artNum" value="${art?.art_number||nextArtNumber()}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" readonly></div><div><label class="text-xs text-slate-400">Status</label><select id="artStatus" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">${['rascunho','pendente','emitida','cancelada'].map(s=>`<option ${(art?.art_status||'rascunho')===s?'selected':''}>${s}</option>`).join('')}</select></div></div><div><label class="text-xs text-slate-400">Nome da Obra *</label><input id="workName" required value="${art?.work_name||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="text-xs text-slate-400">Tipo Obra</label><select id="workType" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"><option value="">Selecione</option>${workTypes.map(t=>`<option ${(art?.work_type||'')===t?'selected':''}>${t}</option>`).join('')}</select></div><div><label class="text-xs text-slate-400">Endereço</label><input id="workAddr" value="${art?.work_address||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div></div><div><label class="text-xs text-slate-400">Descrição Serviço *</label><textarea id="serviceDesc" required rows="2" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm">${art?.service_desc||''}</textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="text-xs text-slate-400">Data Início</label><input id="startDate" type="date" value="${art?.start_date||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div><div><label class="text-xs text-slate-400">Previsão Término</label><input id="endDate" type="date" value="${art?.end_date||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div></div><div><label class="text-xs text-slate-400">Valor Contrato (R$)</label><input id="contractVal" type="number" step="0.01" value="${art?.contract_value||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div><div><label class="text-xs text-slate-400">Cliente *</label><input id="clientName" required list="clientList" value="${art?.client_name||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"><datalist id="clientList">${clients.map(c=>`<option value="${c.name}">`).join('')}</datalist></div><div><label class="text-xs text-slate-400">Responsável Técnico</label><input id="responsible" value="${art?.responsible||'Eng. Bragion'}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div><div><label class="text-xs text-slate-400">CREA</label><input id="creaNum" value="${art?.crea_number||''}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm"></div><div><label class="text-xs text-slate-400">Observações</label><textarea id="artNotes" rows="2" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm">${art?.notes||''}</textarea></div></div><div class="flex justify-end gap-3"><button type="button" onclick="navigate('arts')" class="px-5 py-2 rounded-lg text-sm text-slate-400 hover:bg-slate-800">Cancelar</button><button type="submit" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-2 rounded-lg text-sm font-medium">${editingId?'Atualizar':'Salvar'} ART</button></div></form>`; }
+  async function saveArt(e) { e.preventDefault(); const data = { type:'art', art_number:document.getElementById('artNum').value, art_status:document.getElementById('artStatus').value, work_name:document.getElementById('workName').value, work_type:document.getElementById('workType').value, work_address:document.getElementById('workAddr').value, service_desc:document.getElementById('serviceDesc').value, start_date:document.getElementById('startDate').value, end_date:document.getElementById('endDate').value, contract_value:parseFloat(document.getElementById('contractVal').value)||0, client_name:document.getElementById('clientName').value, responsible:document.getElementById('responsible').value, crea_number:document.getElementById('creaNum').value, company_name:'Bragion Projetos', notes:document.getElementById('artNotes').value, created_at:editingId? (allData.find(r=>r.__backendId===editingId)?.created_at||new Date().toISOString()) : new Date().toISOString() }; if(editingId){ const existing = allData.find(r=>r.__backendId===editingId); await dataSdk.update({...existing, ...data}); showToast('ART atualizada!'); navigate('arts'); } else { await dataSdk.create(data); showToast('ART salva!'); navigate('arts'); } }
+  async function duplicateArt(id){ const art = allData.find(r=>r.__backendId===id); if(art){ const copy = {...art, __backendId:undefined, art_number:nextArtNumber(), art_status:'rascunho', created_at:new Date().toISOString()}; await dataSdk.create(copy); showToast('ART duplicada'); navigate('arts'); } }
+  function renderArtView() { const art = allData.find(r=>r.__backendId===editingId); if(!art) return '<div class="text-center py-12">ART não encontrada</div>'; return `<div class="max-w-3xl mx-auto space-y-4"><div class="flex gap-3"><button onclick="navigate('edit-art','${art.__backendId}')" class="bg-brand-500 text-white px-4 py-2 rounded-lg text-sm"><i data-lucide="edit" class="w-4 h-4 inline mr-1"></i>Editar</button><button onclick="duplicateArt('${art.__backendId}')" class="bg-slate-700 text-white px-4 py-2 rounded-lg text-sm"><i data-lucide="copy" class="w-4 h-4 inline mr-1"></i>Duplicar</button><button onclick="changeArtStatus('${art.__backendId}','emitida')" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm"><i data-lucide="check-circle" class="w-4 h-4 inline mr-1"></i>Emitir</button></div><div class="bg-white text-slate-800 rounded-xl overflow-hidden shadow-xl"><div class="bg-slate-800 p-6 text-white"><div class="text-2xl font-display">${art.art_number}</div><div class="text-sm">ART - Anotação de Responsabilidade Técnica</div></div><div class="p-6 space-y-4"><div><strong>Obra:</strong> ${art.work_name}</div><div><strong>Cliente:</strong> ${art.client_name}</div><div><strong>Serviço:</strong> ${art.service_desc}</div><div><strong>Valor:</strong> ${formatCurrency(art.contract_value)}</div><div><strong>Status:</strong> <span class="status-badge ${statusColor(art.art_status)}">${art.art_status}</span></div><div><strong>CREA:</strong> ${art.crea_number||'-'}</div>${art.notes?`<div><strong>Obs:</strong> ${art.notes}</div>`:''}</div></div></div>`; }
+  async function changeArtStatus(id, status){ const art = allData.find(r=>r.__backendId===id); if(art){ await dataSdk.update({...art, art_status:status}); showToast(`ART ${status}!`); navigate('view-art', id); } }
+  async function deleteRecord(id, label){ showConfirm(`Excluir ${label}?`, async ()=>{ const rec = allData.find(r=>r.__backendId===id); if(rec) await dataSdk.delete(rec); showToast(`${label} removido`); }); }
+
+  // Clients & Works (simplificados para manter responsividade)
+  function renderClientsList() { const clients = getClients(); return `<div class="space-y-4"><div class="flex justify-between"><input id="clientSearch" oninput="filterClients()" placeholder="Buscar cliente..." class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm w-48"><button onclick="navigate('new-client')" class="bg-brand-500 text-white px-4 py-2 rounded-lg text-sm">Novo Cliente</button></div><div id="clientsListContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">${clients.map(c=>`<div class="bg-slate-900/50 border border-slate-800/50 rounded-xl p-4"><div class="font-semibold text-white">${c.name}</div><div class="text-xs text-slate-400">${c.email||''} ${c.phone||''}</div><button onclick="deleteRecord('${c.__backendId}','Cliente')" class="text-xs text-red-400 mt-2">Excluir</button></div>`).join('')||'<div class="col-span-full text-center py-8 text-slate-500">Nenhum cliente</div>'}</div></div>`; }
+  function filterClients(){ const q=document.getElementById('clientSearch')?.value.toLowerCase()||''; let clients=getClients().filter(c=>(c.name||'').toLowerCase().includes(q)); document.getElementById('clientsListContainer').innerHTML=clients.map(c=>`<div class="bg-slate-900/50 p-4 rounded-xl"><div class="font-semibold text-white">${c.name}</div><div class="text-xs text-slate-400">${c.email||''}</div></div>`).join('')||'<div class="col-span-full text-center py-8">Nenhum resultado</div>'; lucide.createIcons();}
+  function renderClientForm(){ return `<form onsubmit="saveClient(event)" class="max-w-lg mx-auto bg-slate-900/50 p-5 rounded-xl space-y-4"><h3 class="text-white font-semibold">Novo Cliente</h3><input id="cName" required placeholder="Nome" class="w-full bg-slate-800 rounded-lg px-3 py-2 text-sm"><input id="cEmail" placeholder="Email" class="w-full bg-slate-800 rounded-lg px-3 py-2 text-sm"><input id="cPhone" placeholder="Telefone" class="w-full bg-slate-800 rounded-lg px-3 py-2 text-sm"><div class="flex gap-3 justify-end"><button type="button" onclick="navigate('clients')" class="text-slate-400">Cancelar</button><button type="submit" class="bg-brand-500 text-white px-4 py-2 rounded-lg">Salvar</button></div></form>`; }
+  async function saveClient(e){ e.preventDefault(); await dataSdk.create({ type:'client', name:document.getElementById('cName').value, email:document.getElementById('cEmail').value, phone:document.getElementById('cPhone').value, created_at:new Date().toISOString() }); showToast('Cliente salvo'); navigate('clients'); }
+  function renderWorksList(){ const works = getWorks(); return `<div class="space-y-4"><div class="flex justify-end"><button onclick="navigate('new-work')" class="bg-brand-500 text-white px-4 py-2 rounded-lg text-sm">Nova Obra</button></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-3">${works.map(w=>`<div class="bg-slate-900/50 p-4 rounded-xl"><div class="font-semibold text-white">${w.work_name}</div><div class="text-xs text-slate-400">${w.work_type||'-'}</div><button onclick="deleteRecord('${w.__backendId}','Obra')" class="text-red-400 text-xs mt-2">Excluir</button></div>`).join('')||'<div class="col-span-full text-center py-8 text-slate-500">Nenhuma obra</div>'}</div></div>`; }
+  function renderWorkForm(){ return `<form onsubmit="saveWork(event)" class="max-w-lg mx-auto bg-slate-900/50 p-5 rounded-xl space-y-4"><h3 class="text-white font-semibold">Cadastrar Obra</h3><input id="wName" required placeholder="Nome da Obra" class="w-full bg-slate-800 rounded-lg px-3 py-2 text-sm"><input id="wType" placeholder="Tipo" class="w-full bg-slate-800 rounded-lg px-3 py-2 text-sm"><div class="flex gap-3 justify-end"><button type="button" onclick="navigate('works')" class="text-slate-400">Cancelar</button><button type="submit" class="bg-brand-500 text-white px-4 py-2 rounded-lg">Salvar</button></div></form>`; }
+  async function saveWork(e){ e.preventDefault(); await dataSdk.create({ type:'work', work_name:document.getElementById('wName').value, work_type:document.getElementById('wType').value, created_at:new Date().toISOString() }); showToast('Obra salva'); navigate('works'); }
+  function renderReports(){ const arts=getArts(); const totalVal=arts.reduce((s,a)=>s+(a.contract_value||0),0); return `<div class="space-y-6"><div class="bg-slate-900/50 p-6 rounded-xl text-center"><div class="text-3xl font-display font-bold text-brand-400">${formatCurrency(totalVal)}</div><div class="text-sm text-slate-400">Valor total em contratos</div></div><div class="bg-slate-900/50 p-5 rounded-xl"><h3 class="text-white font-semibold mb-2">ARTs por Status</h3>${['emitida','pendente','rascunho'].map(s=>{const c=arts.filter(a=>a.art_status===s).length;return `<div class="flex justify-between text-sm"><span>${s}</span><span class="text-white">${c}</span></div>`}).join('')}</div></div>`; }
+
+  // Eventos e inicialização
+  window.navigate = navigate;
+  window.toggleSidebar = toggleSidebar;
+  window.filterArts = filterArts;
+  window.filterClients = filterClients;
+  window.saveArt = saveArt;
+  window.saveClient = saveClient;
+  window.saveWork = saveWork;
+  window.deleteRecord = deleteRecord;
+  window.duplicateArt = duplicateArt;
+  window.changeArtStatus = changeArtStatus;
+  window.closeConfirm = closeConfirm;
+  window.closeSettings = () => document.getElementById('settingsModal').style.display = 'none';
+
+  document.getElementById('settingsBtn').onclick = () => {
+    document.getElementById('configAppTitle').value = appConfig.app_title;
+    document.getElementById('configBrand').value = appConfig.company_brand;
+    document.getElementById('configGreeting').value = appConfig.dashboard_greeting;
+    document.getElementById('configPrimary').value = appConfig.primary_action_color;
+    document.getElementById('settingsModal').style.display = 'flex';
+  };
+  document.getElementById('applySettingsBtn').onclick = () => {
+    updateConfig({ app_title: document.getElementById('configAppTitle').value, company_brand: document.getElementById('configBrand').value, dashboard_greeting: document.getElementById('configGreeting').value, primary_action_color: document.getElementById('configPrimary').value });
+    closeSettings();
+    if(currentPage === 'dashboard') document.getElementById('pageTitle').textContent = appConfig.dashboard_greeting;
+    renderPage();
+    showToast('Configurações atualizadas');
+  };
+
+  (async () => {
+    loadConfig();
+    await dataSdk.init({ onDataChanged: (data) => { allData = data; renderPage(); } });
+    navigate('dashboard');
+  })();
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e9cffa35232cb49',t:'MTc3NTc3NDI3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
